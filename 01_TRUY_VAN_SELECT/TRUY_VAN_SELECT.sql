@@ -1,0 +1,5 @@
+﻿-- VIẾT CÂU LỆNH SQL LẤY RA TÊN TẤT CẢ SẢN PHẨM
+USE NORTHWND
+GO
+
+SELECT * FROM dbo.Products
