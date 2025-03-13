@@ -1,0 +1,28 @@
+﻿USE NORTHWND
+GO
+
+/*
+SELECT TOP number PERCENT column_name(s)
+FROM table_name
+WHERE condition
+
+GIỚI HẠN SỐ LƯỢNG DÒNG (HOẶC %) ĐƯỢC TRẢ VỀ KHI GỌI LỆNH SELECT
+*/
+
+-- LẤY RA 5 ROW ĐẦU TIÊN TRONG BẢNG CUSTOMERS
+SELECT TOP 5 * FROM dbo.Customers AS CU
+
+-- LẤY RA 30% NHÂN VIÊN TỪ BẢNG EMPLOYEES
+SELECT TOP 30 PERCENT *
+FROM dbo.Employees AS EM
+
+-- LẤY RA MÃ KHÁCH HÀNG TRONG BÀNG ĐƠN HÀNG QUY ĐỊNH LÀ MÃ KHÁCH HÀNG KHÔNG TRÙNG LẶP, CHỈ LẤY 5 DÒNG ĐẦU TIÊN.
+SELECT DISTINCT TOP 5 O.CustomerID
+FROM dbo.Orders AS O
+
+-- LẤY RA SẢN PHẨM CÓ MÃ THỂ LOẠI KHÔNG BỊ TRÙNG LẶP VÀ CHỈ LẤY 3 DONG ĐẦU TRONG BẢNG Products.
+SELECT *
+FROM dbo.Products AS PR
+
+SELECT DISTINCT TOP 3 PR.CategoryID -- LẤY RA CÁC MÃ THỂ LOÃI KHÁC NHAU -> SAU ĐÓ LẤY 3 CÁI ĐẦU TIÊN
+FROM dbo.Products AS PR
