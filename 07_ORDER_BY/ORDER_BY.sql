@@ -10,6 +10,31 @@ DESC: SẮP XẾP GIẢM DẦN
 */
 
 -- LIỆT KÊ TẤT CẢ CÁC NHÀ CUNG CẤP THEO THỨ TỰ TÊN ĐƠN VỊ COMPANYNAME TỪ A -> Z
-SELECT SU.CompanyName FROM dbo.Suppliers AS SU
+SELECT * FROM dbo.Suppliers AS SU
 ORDER BY SU.CompanyName ASC
 
+-- LIỆT KÊ SẢN PHẨM THEO THỨ TỰ TÊN ĐƠN VỊ UNITPRICE GIẢM DẦN
+SELECT * 
+FROM dbo.Products AS P
+ORDER BY P.UnitPrice DESC
+
+-- SẮP XẾP TÊN TẤT CẢ NHÂN VIÊN THEO THỨ TỰ HỌ VÀ TÊN ĐỆM A->Z
+SELECT * 
+FROM dbo.Employees AS EM
+ORDER BY EM.LastName ASC, EM.FirstName ASC
+-- CỘT FIRSTNAME ĐI THEO CỘT LASTNAME NÊN CỘT FIRSTNAME SẼ KHÔNG CÓ SỰ UPDATE.
+
+-- HÃY LẤY RA MỘT SẢN PHẨM CỐ SỐ LƯỢNG BÁN CAO NHẤT TỪ BẢNG [ORDER DETAILS], KHÔNG ĐƯỢC DÙNG MAX.
+SELECT TOP 1 *
+FROM dbo.[Order Details] AS OD
+ORDER BY OD.UnitPrice DESC
+
+-- HÃY LIỆT KÊ DANH SÁCH CÁC ĐƠN ĐẶT HÀNG (ORDER ID) TRONG BẢNG ODERS THEO THỨ TỰ GIẢM DẦN CỦA NGÀY ĐẶT HÀNG.
+SELECT O.OrderID AS [DON DAT HANG]
+FROM dbo.Orders AS O
+ORDER BY O.OrderDate DESC
+
+-- HÃY LIỆT KÊ TÊN, ĐƠN GIÁ, SỐ LƯỢNG TỒN KHO (UnitStock) CỦA TẤT CẢ CÁC SẢN PHẨM TRONG BẢNG PRODUCTS THEO THỨ TỰ GIẢM DẦN CỦA UnitStock.
+SELECT P.ProductName, P.UnitPrice, P.UnitsInStock
+FROM dbo.Products AS P
+ORDER BY P.UnitsInStock DESC
