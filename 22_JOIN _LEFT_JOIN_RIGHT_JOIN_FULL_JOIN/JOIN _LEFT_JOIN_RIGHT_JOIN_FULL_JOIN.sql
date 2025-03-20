@@ -109,7 +109,7 @@ RIGHT JOIN table3 ON join_condition2
 -- TÊN CÔNG TY KHÁCH HÀNG
 SELECT O.OrderID, CU.CompanyName
 FROM dbo.Orders AS O
-RIGHT JOIN dbo.Customers AS CU
+INNER JOIN dbo.Customers AS CU
 ON CU.CustomerID = O.CustomerID
 
 SELECT O.OrderID, CU.CompanyName
