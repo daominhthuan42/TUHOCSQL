@@ -36,6 +36,10 @@ FROM dbo.[Order Details] AS OD
 WHERE (OD.Quantity IN (10, 20)) OR (OD.UnitPrice BETWEEN 100 AND 200);
 
 /*
+https://datapot.vn/tai-lieu-tu-hoc-sql-phan-4-hai-kieu-gop-bang-bang-join-va-union-trong-sql/?srsltid=AfmBOoqf2a-KTg4CGyz7IIGypUIj9JSwhDgbuJyaGybeWCa889CYL-pH
+*/
+
+/*
 TRUY VẤN 5 = DISTINCT + TRUY VẤN 4 (360)
 TỬ BẢNG ORDER DETAIL HÃY LIỆT KÊ CÁC ĐƠN HÀNG CÓ UNIT PRICE NẰM TRONG PHẠM VI 100 ĐẾN 200
 HOẶC CÁC ĐƠN HÀNG CÓ QUANTITY NẰM TRONG PHẠM VI 10 HOẶC 20
