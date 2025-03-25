@@ -82,14 +82,73 @@ FROM [dbo].[Orders] AS O
 
 -- Liet ke cac don hang co 
 -- ngay dat hang gan nhat
+SELECT *
+FROM [dbo].[Orders] AS O
+WHERE O.OrderDate = (
+	SELECT MAX(OrderDate)
+	FROM [dbo].[Orders]
+);
 
 -- Liệt kê tất cả các sản phẩm (ProductName)
 -- mà không có đơn đặt hàng nào đặt mua chúng.
 
+-- KO DÙNG SUB QUERY
+SELECT PR.ProductID, PR.ProductName, OD.OrderID
+FROM [dbo].[Products] AS PR
+LEFT JOIN [dbo].[Order Details] AS OD ON OD.ProductID = PR.ProductID
+WHERE OD.OrderID IS NULL
+
+-- DÙNG SUB QUERY
+SELECT PR.ProductID, PR.ProductName
+FROM [dbo].[Products] AS PR
+WHERE PR.ProductID NOT IN (
+	SELECT DISTINCT ProductID
+	FROM [dbo].[Order Details]
+);
+ 
 -- Lấy thông tin về các đơn hàng, và tên các sản phẩm 
 -- thuộc các đơn hàng chưa được giao cho khách.
+SELECT O.OrderID, PR.ProductName
+FROM [dbo].[Orders] AS O, [dbo].[Order Details] AS OD, [dbo].[Products] AS PR
+WHERE O.OrderID = OD.OrderID AND OD.ProductID = PR.ProductID AND O.OrderID NOT IN (
+	  SELECT [OrderID]
+	  FROM [dbo].[Orders]
+	  WHERE [ShippedDate] IS NOT NULL
+)
+ORDER BY O.OrderID 
+
+-- KO DÙNG SUB QUERY
+SELECT O.OrderID, PR.ProductName
+FROM [dbo].[Orders] AS O
+LEFT JOIN [dbo].[Order Details] AS OD ON O.OrderID = OD.OrderID
+LEFT JOIN [dbo].[Products] AS PR ON OD.ProductID = PR.ProductID
+WHERE O.ShippedDate IS NULL
 
 -- Lấy thông tin về các sản phẩm có số lượng tồn kho 
 --- ít hơn số lượng tồn kho trung bình của tất cả các sản phẩm
+SELECT *
+FROM [dbo].[Products] AS PR
+WHERE PR.UnitsInStock < (
+	SELECT AVG(UnitsInStock)
+	FROM [dbo].[Products]
+);
 
--- Lấy thông tin về các khách hàng có tổng giá trị đơn hàng lớn nhất
+-- Lấy thông tin về các khách hàng có tổng giá trị đơn hàng lớn nhất.
+
+SELECT TOP 1 CU.CustomerID, CU.ContactName, O.OrderID,  SUM([UnitPrice] * [Quantity]) AS [SumPrice]
+FROM [dbo].[Orders] AS O, [dbo].[Customers] AS CU, [dbo].[Order Details] AS OD
+WHERE O.OrderID = OD.OrderID AND O.CustomerID = CU.CustomerID
+GROUP BY CU.CustomerID, CU.ContactName, O.OrderID
+ORDER BY SUM([UnitPrice] * [Quantity]) DESC
+
+SELECT CU.CustomerID, CU.ContactName, O.OrderID, SUM(Quantity * UnitPrice)
+FROM [dbo].[Customers] AS CU
+INNER JOIN [dbo].[Orders] AS O ON O.CustomerID = CU.CustomerID
+INNER JOIN [dbo].[Order Details] AS OD ON OD.OrderID = O.OrderID
+GROUP BY CU.CustomerID, CU.ContactName, O.OrderID
+HAVING SUM(Quantity * UnitPrice) = (
+       SELECT TOP 1 SUM(Quantity * UnitPrice)
+	   FROM [dbo].[Order Details]
+	   GROUP BY OrderID
+	   ORDER BY SUM(Quantity * UnitPrice) DESC
+	   );
