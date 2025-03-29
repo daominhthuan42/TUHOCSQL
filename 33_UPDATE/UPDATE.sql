@@ -1,0 +1,34 @@
+﻿USE NORTHWND
+GO
+
+-- TẠO RA BẢNG TẠM CUSTOMER
+SELECT *
+INTO CUSTOMER_TEMP
+FROM [dbo].[Customers];
+
+-- CẬP NHẬT TÔNG TIN KHÁCH HÀNG TRONG BẢNG TẠM CUSTOMER
+-- DƯỚI ĐÂY LÀ CÁCH CẬP NHẬT ĐỊA CHỈ KHÁCH HÀNG CÓ ID LÀ 'ALFKI'
+UPDATE [dbo].[CUSTOMER_TEMP]
+SET [Address] = 'New Address'
+WHERE [CustomerID] LIKE 'ALFKI'
+
+-- TĂNG GIÁ TOÀN BỘ SẢN PHẨM LÊN 10%
+SELECT *
+INTO PRODUCT_TEMP
+FROM [dbo].[Products];
+
+UPDATE [dbo].[PRODUCT_TEMP]
+SET [UnitPrice] += [UnitPrice] * 0.1;
+
+-- CẬP NHẬT THÔNG TIN CỦA SẢN PHẨM CÓ PRODUCTID LÀ 7 TRONG BẢNG PRODUCTS ĐỂ THAY ĐỔI TÊN SẢN PHẨM.
+-- THÀNH 'MÁY TÍNH XÁCH TAY MỚI'.
+-- VÀ CẬP NHẬT GIÁ BÁN THÀNH 999.99 ĐÔ LA.
+UPDATE [dbo].[PRODUCT_TEMP]
+SET [ProductName] = 'MÁY TÍNH XÁCH TAY MỚI',
+[UnitPrice] = 999.99
+WHERE [ProductID] = 7;
+
+-- UPDATE THÔNG TIN TẤT CẢ KHÁCH HÀNG TRONG BẢNG CUSTOMER CÓ THÀNH PHỐ LÀ PARIS ĐỂ THAY ĐỔI QUỐC GIA CỦA HỌ THÀNH PHÁP.
+UPDATE [dbo].[CUSTOMER_TEMP]
+SET [Country] = 'PHÁP'
+WHERE [City] LIKE 'Paris'
