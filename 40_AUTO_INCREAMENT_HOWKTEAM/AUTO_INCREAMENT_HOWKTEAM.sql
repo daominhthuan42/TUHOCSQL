@@ -1,0 +1,34 @@
+﻿USE HowKteam
+GO
+
+CREATE TABLE TEST_AUTO
+(
+	ID INT PRIMARY KEY IDENTITY, -- TỰ TĂNG PHẢI LÀ SỐ. BẮT ĐẦU TỪ 1 VÀ TĂNG 1 ĐƠN VỊ.
+	NAME NVARCHAR(100) NULL
+)
+GO
+
+INSERT INTO [dbo].[TEST_AUTO]
+VALUES 
+(N''),
+(N''), 
+(N''), 
+(N'');
+
+SELECT * FROM [dbo].[TEST_AUTO]
+
+CREATE TABLE TEST_AUTO2
+(
+	ID INT PRIMARY KEY IDENTITY(5, 10), -- TỰ TĂNG PHẢI LÀ SỐ. BẮT ĐẦU TỪ 5 VÀ TĂNG 10 ĐƠN VỊ.
+	NAME NVARCHAR(100) NULL
+)
+GO
+
+INSERT INTO [dbo].[TEST_AUTO2]
+VALUES 
+(N''),
+(N''), 
+(N''), 
+(N'');
+
+SELECT * FROM [dbo].[TEST_AUTO2]
